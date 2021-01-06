@@ -13,8 +13,12 @@ class wheel
 
     public:
     
-    wheel()
+    wheel(){};
+
+    void generate_new_word()
     {
+        word.clear();
+        tmp_word.clear();
         string buf;
         fstream tmp("words.txt", ios_base::in);
         int num = 0;
@@ -48,6 +52,7 @@ class wheel
         return num;
     };
 
+
     void check(char letter)
     {
         int i, len = word.length();
@@ -61,12 +66,29 @@ class wheel
     void game_circle()
     {
         char letter;
+        generate_new_word();
         while (num_symb('_') != 0){
             cout << endl << tmp_word << endl << "Input letter: ";
             cin >> letter;
             check(letter);
         } 
         cout << endl << endl << "Good!" << endl << "Your word was " << word << endl;
+    };
+
+    void game()
+    {
+        bool flag = true;
+        char answer;
+        game_circle();
+        while(flag){
+            cout << "Repeat game? (y/n)" << endl;
+            cin >> answer;
+            switch (answer){
+                case 'y': game(); flag = false; break;
+                case 'n': flag = false; break;
+                default: cerr << "Uncorrect answer!" << endl;
+            }
+        }
     };
 
 };
@@ -79,5 +101,5 @@ int main()
     cin >> name;
     cout << "Hello, " << name << "\n\nLet's play!" << endl;
     wheel game;
-    game.game_circle();
+    game.game();
 }
