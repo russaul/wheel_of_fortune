@@ -10,6 +10,7 @@ class wheel
 {
     string word;
     string tmp_word;
+    string question;
 
     public:
     
@@ -32,10 +33,14 @@ class wheel
         srand(time(0));
         int num_word = rand() % num + 1;
         for (num = 0; num < num_word; num++){
-            buf.clear();
-            getline(tmp, buf);
+            word.clear();
+            getline(tmp, word);
         }
-        word = buf;
+        fstream text("questions.txt", ios_base::in);
+        for (num = 0; num < num_word; num++){
+            question.clear();
+            getline(text, question);
+        }
         num_word = word.length();
         for (num = 0; num < num_word; num++)
             tmp_word += '_';
@@ -68,6 +73,7 @@ class wheel
         char letter;
         generate_new_word();
         while (num_symb('_') != 0){
+            cout << endl << question << endl;
             cout << endl << tmp_word << endl << "Input letter: ";
             cin >> letter;
             check(letter);
